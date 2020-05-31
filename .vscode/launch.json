@@ -1,0 +1,28 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "Python: Django",
+      "type": "python",
+      "request": "launch",
+      "stopOnEntry": true,
+      "program": "${workspaceFolder}/manage.py",
+    //   "python.pythonPath": "/home/m/.local/share/virtualenvs/ksolutions-xHEvKLXZ/bin/python",
+      "console": "integratedTerminal",
+      "args": ["runserver"],
+      "justMyCode": false,
+      "django": true
+    },
+    {
+      "name": "Python: Django Debug Single Test",
+      "type": "python",
+      "request": "launch",
+      "program": "${workspaceFolder}/manage.py",
+      "args": [
+        "test",
+        "`echo -n ${relativeFileDirname} | tr / .`.${fileBasenameNoExtension}"
+      ],
+      "django": true
+    }
+  ]
+}
