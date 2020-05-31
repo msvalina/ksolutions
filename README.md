@@ -74,6 +74,10 @@ pipenv shell
 
 ## Testing
 
+Create super user first
+
 ```shell
+echo "from django.contrib.auth.models import User; User.objects.create_superuser('admin', 'admin@example.com', 'mantis5c')" | python manage.py shell
+
 curl -H 'Content-Type: application/json'  --user admin:mantis5c 'http://127.0.0.1:8000/bookmarks/' -X POST --data  '{ "is_public": true, "owner": 1, "title": "Foolish", "url": "http://foolish.com" }'
 ```
