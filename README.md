@@ -77,9 +77,17 @@ pipenv shell
 Create super user first
 
 ```shell
-echo "from django.contrib.auth.models import User; User.objects.create_superuser('admin', 'admin@example.com', 'mantis5c')" | python manage.py shell
+./manage.py shell -c "from django.contrib.auth.models import User; User.objects.create_superuser('admin', 'admin@example.com', 'adminpass')"
+./manage.py shell -c "from django.contrib.auth.models import User; User.objects.create_user('foo', 'admin@example.com', 'foopass')"
 
-curl -H 'Content-Type: application/json'  --user admin:mantis5c 'http://127.0.0.1:8000/bookmarks/' -X POST --data  '{ "is_public": true, "owner": 1, "title": "Foolish", "url": "http://foolish.com" }'
-curl -H 'Content-Type: application/json'  --user admin:mantis5c 'http://127.0.0.1:8000/bookmarks/' -X POST --data  '{ "is_public": true, "owner": 1, "title": "BarFool", "url": "http://barfoo.com" }'
-curl -H 'Content-Type: application/json'  --user admin:mantis5c 'http://127.0.0.1:8000/bookmarks/' -X POST --data  '{ "is_public": true, "owner": 1, "title": "bazfoo", "url": "http://barfoo.com" }'
+curl -H 'Content-Type: application/json'  --user admin:adminpass 'http://127.0.0.1:8000/bookmarks/' -X POST --data  '{ "is_public": true, "owner": 1, "title": "Foolish", "url": "http://foolish.com" }'
+curl -H 'Content-Type: application/json'  --user admin:adminpass 'http://127.0.0.1:8000/bookmarks/' -X POST --data  '{ "is_public": false, "owner": 1, "title": "BarFool", "url": "http://barfoo.com" }'
+curl -H 'Content-Type: application/json'  --user admin:adminpass 'http://127.0.0.1:8000/bookmarks/' -X POST --data  '{ "is_public": true, "owner": 1, "title": "bazfoo", "url": "http://barfoo.com" }'
+curl -H 'Content-Type: application/json'  --user foo:foopass 'http://127.0.0.1:8000/bookmarks/' -X POST --data  '{ "is_public": true, "owner": 1, "title": "FooFoo", "url": "http://barfoo.com" }'
+curl -H 'Content-Type: application/json'  --user foo:foopass 'http://127.0.0.1:8000/bookmarks/' -X POST --data  '{ "is_public": false, "owner": 1, "title": "FooFoo", "url": "http://barfoo.com" }'
+
+curl --user admin:adminpass http://127.0.0.1:8000/bookmarks/
+curl --user foo:foopass http://127.0.0.1:8000/bookmarks/
+
+curl  http://127.0.0.1:8000/bookmarks/
 ```
