@@ -3,18 +3,25 @@ from rest_framework import status
 from rest_framework.test import APITestCase
 from rest_framework.test import force_authenticate
 from django.contrib.auth.models import User, Group
+from bookmarks.models import Bookmark
 
-class UserTests(APITestCase):
-    def test_create_user(self):
+
+class BookmarkTests(APITestCase):
+    def test_create_bookmark(self):
         """
-        Ensure we can create a new user object.
+        Ensure we can create a new bookmark object.
         """
-        User.objects.create_user(username='admin', email="m@m.com")
-        user = User.objects.get(username='admin')
-        data = {'username': 'foobar', 'email': 'm@m.com'}
+        User.objects.create_user(username="admin", email="m@m.com")
+        user = User.objects.get(username="admin")
         self.client.force_authenticate(user=user)
-        response = self.client.post('/users/', data, format='json')
+        data = {
+            "is_public": True,
+            "owner": 1,
+            "title": "Foolish",
+            "url": "http://foolish.com",
+            "owner": 1,
+        }
+        response = self.client.post("/bookmarks/", data, format="json")
         self.assertEqual(response.status_code, status.HTTP_201_CREATED)
-        self.assertEqual(User.objects.count(), 2)
-        self.assertEqual(User.objects.get(username='foobar'), 'foobar')
-    
+        self.assertEqual(Bookmark.objects.count(), 1)
+
