@@ -4,6 +4,8 @@ from bookmarks.serializers import BookmarkSerializer, UserSerializer
 from rest_framework import generics
 from rest_framework.authentication import SessionAuthentication, BasicAuthentication
 from rest_framework.permissions import IsAuthenticated
+from rest_framework import permissions
+from rest_framework.response import Response
 
 
 class BookmarkList(generics.ListCreateAPIView):
@@ -14,6 +16,14 @@ class BookmarkList(generics.ListCreateAPIView):
 
     def perform_create(self, serializer):
         serializer.save(owner=self.request.user)
+    
+    def list(self, request):
+        queryset1 = Bookmark.objects.all().filter(is_public=True)
+        queryset2 = Bookmark.objects.all().filter(owner=request.user.id)
+        serializer1 = BookmarkSerializer(queryset1, many=True)
+        serializer2 = BookmarkSerializer(queryset2, many=True)
+        data = serializer1.data + serializer2.data
+        return Response(data)
 
 
 
@@ -31,8 +41,10 @@ class BookmarkDetail(generics.RetrieveUpdateDestroyAPIView):
 class UserList(generics.ListCreateAPIView):
     queryset = User.objects.all()
     serializer_class = UserSerializer
+    permission_classes = [permissions.IsAuthenticatedOrReadOnly]
 
 
 class UserDetail(generics.RetrieveAPIView):
     queryset = User.objects.all()
     serializer_class = UserSerializer
+    permission_classes = [permissions.IsAuthenticatedOrReadOnly]
