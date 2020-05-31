@@ -105,9 +105,18 @@ To debug one test file with vscode
 
 
 
-## What database would you use for this project in production and why?
+## 1) What database would you use for this project in production and why?
 
 I would use mysql database because some of future requirements might be
 database user management, which sqlite3 lacks.
 There are also some data types which are not supported in sqlite3 but are in
 MySql
+
+
+
+## 2) How would you implement a bookmark "newsletter" (users receive emails with newest public bookmarks)?
+
+
+## 3) Write a sql statement of fetching all public bookmarks, not older than 10 days, for a user with id = 1.
+
+SELECT * FROM bookmarks_bookmark WHERE is_public=1 and  created_at <= date('now', '-10 day')
