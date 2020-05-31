@@ -91,3 +91,23 @@ curl --user foo:foopass http://127.0.0.1:8000/bookmarks/
 
 curl  http://127.0.0.1:8000/bookmarks/
 ```
+
+To run code coverage test issue
+
+```shell
+./manage.py test
+```
+
+To debug one test file with vscode
+
+1. Open that file
+2. Use debuging profile: Python: Django Debug Single Test
+
+
+
+## What database would you use for this project in production and why?
+
+I would use mysql database because some of future requirements might be
+database user management, which sqlite3 lacks.
+There are also some data types which are not supported in sqlite3 but are in
+MySql
