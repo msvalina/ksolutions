@@ -75,5 +75,5 @@ pipenv shell
 ## Testing
 
 ```shell
-curl --user admin:mantis5c 'http://127.0.0.1:8000/bookmarks/' -X POST --data  '{ "is_public": true, "owner": 1, "title": "Foolish", "url": "http://foolish.com" }'
+curl -H 'Content-Type: application/json'  --user admin:mantis5c 'http://127.0.0.1:8000/bookmarks/' -X POST --data  '{ "is_public": true, "owner": 1, "title": "Foolish", "url": "http://foolish.com" }'
 ```
